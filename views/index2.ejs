@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaints Bar Graph</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/static/style.css">
+     
+    <!----===== Iconscout CSS ===== -->
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="row justify-content-center mt-5">
+      <div class="col-md-10"> <!-- Adjusted width -->
+        <canvas id="complaintsChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Function to fetch graph data
+    async function fetchGraphData() {
+      const response = await fetch('/graphData');
+      const data = await response.json();
+      return data;
+    }
+
+    // Function to render bar graph
+    async function renderGraph() {
+      const graphData = await fetchGraphData();
+      const labels = graphData.map(item => item.type_of_complaint);
+      const allData = graphData.map(item => item.total);
+      const solvedData = graphData.map(item => item.Solved);
+      const pendingData = graphData.map(item => item.Pending);
+
+      const ctx = document.getElementById('complaintsChart').getContext('2d');
+      const complaintsChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'total',
+            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            data: allData
+          }, {
+            label: 'Solved',
+            backgroundColor: 'rgba(54, 162, 235, 0.5)',
+            data: solvedData
+          }, {
+            label: 'Pending',
+            backgroundColor: 'rgba(255, 206, 86, 0.5)',
+            data: pendingData
+          }]
+        },
+        
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              stacked: true,
+            },
+            y: {
+              stacked: true
+            }
+          }
+        }
+      });
+    }
+     
+    // Render the graph when the page loads
+    document.addEventListener('DOMContentLoaded', renderGraph);
+  </script>
+</body>
+</html>

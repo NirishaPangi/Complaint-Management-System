@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <title>Complaints Dashboard Panel</title> 
+</head>
+<body>
+    <nav>
+        <div class="logo-name">
+            <div class="logo-image">
+                <img src="/assets/logo.png" alt="" >
+            </div>
+            <span class="logo_name">Complaint Management System </span>
+        </div>
+        <div class="menu-items">
+            <ul class="nav-links">
+                <li><a href="#">
+                    <i class="uil uil-estate"></i>
+                    <span class="link-name">Dashboard</span>
+                </a></li>
+                <li><a href="/all_complaints">
+                    <i class="uil uil-chart"></i>
+                    <span class="link-name">Pending Complaints</span>
+                </a></li>
+                <li><a href="/solved_complaints">
+                    <i class="uil uil-thumbs-up"></i>
+                    <span class="link-name">Solved Complaints</span>
+                </a></li>
+               
+                
+            </ul>
+            <ul class="logout-mode">
+                <li><a href="/logout">
+                    <i class="uil uil-signout"></i>
+                    <span class="link-name">Logout</span>
+                </a></li>
+
+                <div class="mode-toggle">
+                  <span class="switch"></span>
+                </div>
+            </li>
+            </ul>
+            <ul class="logout-mode" style="margin-top: 280px;">
+                <li class="mode">
+                    <a href="#">
+                        <i ></i>
+                    <span class="link-name"></span>
+                </a>
+            </li>
+            </ul>
+
+            
+        </div>
+    </nav>
+
+    <section class="dashboard">
+         <div class="top">
+            <i class="uil uil-bars sidebar-toggle"></i>
+
+        <!--    <div class="search-box">
+                <i class="uil uil-search"></i>
+                <input type="text" placeholder="Search here...">
+            </div>
+            
+            <img src="/assets/profile.jpg" alt="">-->
+        </div> 
+
+        <div class="dash-content">
+            <div class="overview">
+                <div class="title">
+                    <i class="uil uil-tachometer-fast-alt"></i>
+                    <span class="text"><%=locals.user?user:'User'%>-<%=locals.role?role:'role'%></span>
+                </div>
+
+                <div class="boxes">
+                    <div class="box box1">
+                        <i class="uil uil-chart"></i>
+                        <span class="text">Total Complaints</span>
+                        <span class="number"><%= allCount %></span>
+                    </div>
+                    <div class="box box2">
+                        <i class="uil uil-thumbs-up"></i>
+                        <span class="text">Solved Complaints</span>
+                        <span class="number"><%= solvedCount %></span>
+                    </div>
+                    <div class="box box3">
+                        <i class="uil uil-thumbs-down"></i>
+                        <span class="text">Unsolved Complaints</span>
+                        <span class="number"><%= unsolvedCount %></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="activity">
+                <div class="title">
+                    <i class="uil uil-clock-three"></i>
+                    <span class="text">Statistics</span>
+                </div>
+                <div>
+                    <%- include('index2') %>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <script >
+        const body = document.querySelector("body"),
+      modeToggle = body.querySelector(".mode-toggle");
+      sidebar = body.querySelector("nav");
+      sidebarToggle = body.querySelector(".sidebar-toggle");
+
+let getMode = localStorage.getItem("mode");
+if(getMode && getMode ==="dark"){
+    body.classList.toggle("dark");
+}
+
+let getStatus = localStorage.getItem("status");
+if(getStatus && getStatus ==="close"){
+    sidebar.classList.toggle("close");
+}
+
+modeToggle.addEventListener("click", () =>{
+    body.classList.toggle("dark");
+    if(body.classList.contains("dark")){
+        localStorage.setItem("mode", "dark");
+    }else{
+        localStorage.setItem("mode", "light");
+    }
+});
+
+sidebarToggle.addEventListener("click", () => {
+    sidebar.classList.toggle("close");
+    if(sidebar.classList.contains("close")){
+        localStorage.setItem("status", "close");
+    }else{
+        localStorage.setItem("status", "open");
+    }
+})
+
+
+
+
+
+    </script>
+</body>
+</html>
