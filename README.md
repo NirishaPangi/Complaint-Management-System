@@ -15,5 +15,5 @@ Revolutionize complaint management with our streamlined system, empowering users
 Built with Node.js, Express.js, MySQL, and JavaScript, our system ensures seamless complaint resolution and informed decision-making.
  # Contributors
 Allada Sai Mounika,
-Gonapa Sanjana,
+@gonapasanjana,
 Pangi Nireesha
